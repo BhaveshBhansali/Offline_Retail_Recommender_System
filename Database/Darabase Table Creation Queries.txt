@@ -1,0 +1,163 @@
+1. To create category_core table consisting of "BISM-8176_Sortimentshiearchie.txt" (product category) file information.
+
+CREATE TABLE public.category_core
+(
+  level1_value text,
+  level1_bez_de text,
+  level2_value text,
+  level2_bez_de text,
+  level3_value text,
+  level3_bez_de text,
+  level4_value text,
+  level4_bez_de text,
+  level5_value text,
+  level5_bez_de text,
+  level6_value text,
+  level6_bez_de text,
+  level7_value text NOT NULL,
+  level7_bez_de text,
+  CONSTRAINT category_core_pkey PRIMARY KEY (level7_value)
+)
+
+
+
+2. To create article_core table consisting of "artikelstammdaten.txt" (product information like EANUPC) file information:
+
+CREATE TABLE public.article_core
+(
+  material character varying(18) NOT NULL,
+  txtmd text,
+  eanupc text,
+  matl_group text,
+  CONSTRAINT article_core_pkey PRIMARY KEY (material),
+  CONSTRAINT article_core_matl_group_fkey FOREIGN KEY (matl_group)
+      REFERENCES public.category_core (level7_value) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+
+3. To create meta information of receipts table ("receipts"):
+
+CREATE TABLE public.receipts
+(
+  receipt_id bigint NOT NULL,
+  rpa_tnr character varying(20),
+  rpa_bdd timestamp without time zone,
+  rpa_dep character varying(10),
+  plant character varying(4),
+  rpa_wid character varying(10),
+  rpa_tsa numeric(17,2),
+  rpa_trnov numeric(17,2),
+  rpa_lnecnt numeric(17,3),
+  rpa_bts timestamp without time zone,
+  umsatzdatum timestamp without time zone,
+  total_number_of_products integer,
+  total_number_of_distinct_products integer,
+  rpa_bts_epoch bigint,
+  CONSTRAINT receipts_pkey PRIMARY KEY (receipt_id),
+  CONSTRAINT receipts_rpa_tnr_rpa_bdd_rpa_dep_plant_rpa_wid_rpa_tsa_rpa__key UNIQUE (rpa_tnr, rpa_bdd, rpa_dep, plant, rpa_wid, rpa_tsa, rpa_trnov, rpa_lnecnt, rpa_bts, umsatzdatum)
+)
+
+4. To create table ("receipt_articles") for receipt articles:
+
+CREATE TABLE public.receipt_articles
+(
+  id bigint NOT NULL,
+  receipt_id bigint NOT NULL,
+  material character varying(18),
+  rpa_tix character varying(10),
+  version_id character varying(3),
+  rpa_rfl character varying(1),
+  rpa_ttc character varying(4),
+  rpa_oid character varying(30),
+  rpa_pqu character varying(1),
+  rpa_pai character varying(13),
+  rpa_trg character varying(4),
+  rpa_oqu character varying(1),
+  rpa_rsi character varying(10),
+  oi_pblnr character varying(10),
+  rpa_oi1 character varying(30),
+  rpa_pa1 character varying(13),
+  rpa_pa2 character varying(13),
+  zauth character varying(13),
+  zgfknr character varying(15),
+  zacnnr character varying(15),
+  doc_currcy character varying(5),
+  loc_currcy character varying(5),
+  stammkunde_ean character varying(18),
+  rpa_rqu character varying(4),
+  rpa_rsn character varying(10),
+  rpa_dsn character varying(10),
+  rpa_tsn character varying(10),
+  eanupc character varying(18),
+  matl_group character varying(9) NOT NULL,
+  rpa_rtc character varying(4),
+  rpa_rrc character varying(4),
+  rpa_iqu character varying(1),
+  rpa_emc character varying(4),
+  rpa_dtc character varying(4),
+  rpa_drc character varying(4),
+  rpa_did character varying(32),
+  rpa_dtg character varying(4),
+  rpa_drg character varying(4),
+  rpa_tac character varying(4),
+  rpa_tif character varying(1),
+  rpa_ttg character varying(4),
+  rpa_csk character varying(4),
+  rpa_rtg character varying(4),
+  rpa_rdf character varying(1),
+  rpa_iti character varying(18),
+  rpa_rrg character varying(4),
+  rpa_ric character varying(1),
+  rpa_risc character varying(1),
+  base_qty numeric(17,3),
+  umsatzmenge numeric(17,3),
+  bums numeric(17,3),
+  rpa_nsa numeric(17,2),
+  rabatt numeric(17,3),
+  rpa_rqtyb numeric(17,3),
+  rpa_rqtyv numeric(17,3),
+  rpa_retsal numeric(17,2),
+  rpa_satmer numeric(17,2),
+  rpa_reamer numeric(17,2),
+  rpa_retmer numeric(17,2),
+  base_uom character varying(3),
+  sales_unit character varying(3),
+  zwgbnr text,
+  nums numeric(17,4),
+  nettorabatt numeric(17,4),
+  mwstsatz numeric(17,2),
+  rt_bonbuy text,
+  zlgbonnr text,
+  CONSTRAINT receipt_articles_pkey PRIMARY KEY (id, receipt_id, matl_group),
+  CONSTRAINT receipt_articles_material_fkey FOREIGN KEY (material)
+      REFERENCES public.article_core (material) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT receipt_articles_matl_group_fkey FOREIGN KEY (matl_group)
+      REFERENCES public.category_core (level7_value) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT receipt_articles_receipt_id_fkey FOREIGN KEY (receipt_id)
+      REFERENCES public.receipts (receipt_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+
+
+5. To create "globus_productcategory" table:
+
+CREATE TABLE globus_productcategory
+(
+  id serial NOT NULL,
+  value character varying(255),
+  name character varying(255),
+  level integer,
+  geometry geometry(Geometry,3395),
+  parent_category_id integer,
+  dep_id integer,
+  CONSTRAINT globus_productcategory_pkey PRIMARY KEY (id),
+  CONSTRAINT eca98962a66d0562ac667ce138a70710 FOREIGN KEY (parent_category_id)
+      REFERENCES globus_productcategory (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+  CONSTRAINT fk_dep_id FOREIGN KEY (dep_id)
+      REFERENCES globus_department (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+
