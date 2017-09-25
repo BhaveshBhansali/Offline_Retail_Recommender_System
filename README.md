@@ -10,7 +10,7 @@ This project is a collection of retail data specific scripts. It consist of work
     This package consists of scripts for data insertion.
     
     
-    http://umtl-git.dfki.de/nicoherbig/RetailDataAnalyzer/blob/master/Database/CheckoutDataInsertion/README.md
+    https://github.com/BhaveshBhansali/Retail-Analysis/blob/master/Database/CheckoutDataInsertion/README.md
     
     
     #### 1.2 Database Table Creation Queries.txt:
@@ -23,19 +23,19 @@ This project is a collection of retail data specific scripts. It consist of work
     This package consists of scripts related to different analysis of product distribution. 
     
     
-    http://umtl-git.dfki.de/nicoherbig/RetailDataAnalyzer/blob/master/RecommenderSystem/Analysis/README.md
+    http://github.com/BhaveshBhansali/Retail-Analysis/blob/master/RecommenderSystem/Analysis/README.md
 
     #### 2.2 Clustering: 
     This package consists of scripts related to distance metric, feature creation for clustering techniques. This package also includes script consisting of different methods used for clustering.
     
     
-    http://umtl-git.dfki.de/nicoherbig/RetailDataAnalyzer/blob/master/RecommenderSystem/Clustering/README.md
+    http://github.com/BhaveshBhansali/Retail-Analysis/blob/master/RecommenderSystem/Clustering/README.md
     
     #### 2.3 Classification: 
     This package consists of scripts related to feature creation for classification techniques. This package also includes script consisting different methods used for classification.
     
     
-    http://umtl-git.dfki.de/nicoherbig/RetailDataAnalyzer/blob/master/RecommenderSystem/Classification/README.md
+    http://github.com/BhaveshBhansali/Retail-Analysis/blob/master/RecommenderSystem/Classification/README.md
     
     #### 2.4 Mapping: 
     
@@ -51,7 +51,7 @@ This project is a collection of retail data specific scripts. It consist of work
     This package consists of scripts related to 3rd phase (Phase 3) of trace-receipts mapping.
     
     
-    http://umtl-git.dfki.de/nicoherbig/RetailDataAnalyzer/blob/master/RecommenderSystem/Mapping/README.md
+    http://github.com/BhaveshBhansali/Retail-Analysis/blob/master/RecommenderSystem/Mapping/README.md
 
 3. ### Traces: 
     This package consists of sub-packages related to features based on trace data.
@@ -60,7 +60,7 @@ This project is a collection of retail data specific scripts. It consist of work
     This package consists of scripts related to feature creation based on trace data.
     
     
-    http://umtl-git.dfki.de/nicoherbig/RetailDataAnalyzer/blob/master/Traces/Features/README.md
+    http://github.com/BhaveshBhansali/Retail-Analysis/blob/master/Traces/Features/README.md
     
 4. ### Prediction (Mapping Proje)  
     This Jave project is to map shopping cart traces with their receipts.
