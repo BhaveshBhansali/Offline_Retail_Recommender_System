@@ -17,6 +17,20 @@ This project is a collection of retail data specific scripts. It consist of work
     This file contains table creation commands for checkout, product meta, and product hierarchy data.   
 
 2. ### RecommenderSystem: 
+
+    The workflow of our approach to build an offline recommendation system is as follows: We cluster receipts
+to find types of customers. Then, we map the receipts to traces i.e. find receipts to
+a customer journey. Once we have a trace-receipt mapping, we assign a cluster label
+to a trace based on the distance between receipt and the cluster centers. Thereafter,
+we train a classification model with the trace information as features and cluster as
+labels. After training a model, when a new customer comes in for shopping, our trained
+classification model classifies him/her to a type of customer (cluster label). Once we
+have a cluster (of similar receipts/customers) the new customer belongs to, we run an
+Apriori algorithm 9 on cluster receipts to get top
+frequent products. Finally, we recommend products (top frequent products) from the cluster to customer if the customer has not moved into the path where these products
+are kept in the store.
+
+    
     This package consists of sub-packages related to different machine learning techniques and product analysis for recommender systems.
 
     #### 2.1 Analysis: 
@@ -38,6 +52,15 @@ This project is a collection of retail data specific scripts. It consist of work
     http://github.com/BhaveshBhansali/Retail-Analysis/blob/master/RecommenderSystem/Classification/README.md
     
     #### 2.4 Mapping: 
+    
+    We need to map each trace to their corresponding
+customer type for building the classification model to predict the customer type based
+on the customer's movement. Each trace could be mapped to a customer type based
+the on receipt generated after each trace. Therefore, there has to be a mapping between
+traces and receipts since both come from different data sources. The trace data is
+anonymous, i.e. there is no information which receipt is linked to a particular trace.
+
+
     
     Trace-receipt mapping is achieved in following three phases:
     
